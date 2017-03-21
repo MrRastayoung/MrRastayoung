@@ -1,0 +1,501 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <meta name="keywords" content="run, command, container" />
+  <title>run</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+  </style>
+</head>
+<body>
+<div id="header">
+<h1 class="title">run</h1>
+</div>
+<!-- This file is maintained within the docker/docker Github
+     repository at https://github.com/docker/docker/. Make all
+     pull requests against that repo. If you see this file in
+     another repository, consider it read-only there, as it will
+     periodically be overwritten by the definitive file. Pull
+     requests which include edits to this file in other repositories
+     will be rejected.
+-->
+<h1 id="run">run</h1>
+<div class="sourceCode"><pre class="sourceCode markdown"><code class="sourceCode markdown">Usage:  docker run [OPTIONS] IMAGE <span class="ot">[COMMAND] [ARG...]</span>
+
+Run a command in a new container
+
+Options:
+<span class="bn">      --add-host value              Add a custom host-to-IP mapping (host:ip) (default [])</span>
+  -a, --attach value                Attach to STDIN, STDOUT or STDERR (default [])
+<span class="bn">      --blkio-weight value          Block IO (relative weight), between 10 and 1000</span>
+<span class="bn">      --blkio-weight-device value   Block IO weight (relative device weight) (default [])</span>
+<span class="bn">      --cap-add value               Add Linux capabilities (default [])</span>
+<span class="bn">      --cap-drop value              Drop Linux capabilities (default [])</span>
+<span class="bn">      --cgroup-parent string        Optional parent cgroup for the container</span>
+<span class="bn">      --cidfile string              Write the container ID to the file</span>
+<span class="bn">      --cpu-count int               The number of CPUs available for execution by the container.</span>
+<span class="bn">                                    Windows daemon only. On Windows Server containers, this is</span>
+<span class="bn">                                    approximated as a percentage of total CPU usage.</span>
+<span class="bn">      --cpu-percent int             Limit percentage of CPU available for execution</span>
+<span class="bn">                                    by the container. Windows daemon only.</span>
+<span class="bn">                                    The processor resource controls are mutually</span>
+<span class="bn">                                    exclusive, the order of precedence is CPUCount</span>
+<span class="bn">                                    first, then CPUShares, and CPUPercent last.</span>
+<span class="bn">      --cpu-period int              Limit CPU CFS (Completely Fair Scheduler) period</span>
+<span class="bn">      --cpu-quota int               Limit CPU CFS (Completely Fair Scheduler) quota</span>
+  -c, --cpu-shares int              CPU shares (relative weight)
+<span class="bn">      --cpus NanoCPUs               Number of CPUs (default 0.000)</span>
+<span class="bn">      --cpu-rt-period int           Limit the CPU real-time period in microseconds</span>
+<span class="bn">      --cpu-rt-runtime int          Limit the CPU real-time runtime in microseconds</span>
+<span class="bn">      --cpuset-cpus string          CPUs in which to allow execution (0-3, 0,1)</span>
+<span class="bn">      --cpuset-mems string          MEMs in which to allow execution (0-3, 0,1)</span>
+  -d, --detach                      Run container in background and print container ID
+<span class="bn">      --detach-keys string          Override the key sequence for detaching a container</span>
+<span class="bn">      --device value                Add a host device to the container (default [])</span>
+<span class="bn">      --device-cgroup-rule value    Add a rule to the cgroup allowed devices list</span>
+<span class="bn">      --device-read-bps value       Limit read rate (bytes per second) from a device (default [])</span>
+<span class="bn">      --device-read-iops value      Limit read rate (IO per second) from a device (default [])</span>
+<span class="bn">      --device-write-bps value      Limit write rate (bytes per second) to a device (default [])</span>
+<span class="bn">      --device-write-iops value     Limit write rate (IO per second) to a device (default [])</span>
+<span class="bn">      --disable-content-trust       Skip image verification (default true)</span>
+<span class="bn">      --dns value                   Set custom DNS servers (default [])</span>
+<span class="bn">      --dns-option value            Set DNS options (default [])</span>
+<span class="bn">      --dns-search value            Set custom DNS search domains (default [])</span>
+<span class="bn">      --entrypoint string           Overwrite the default ENTRYPOINT of the image</span>
+  -e, --env value                   Set environment variables (default [])
+<span class="bn">      --env-file value              Read in a file of environment variables (default [])</span>
+<span class="bn">      --expose value                Expose a port or a range of ports (default [])</span>
+<span class="bn">      --group-add value             Add additional groups to join (default [])</span>
+<span class="bn">      --health-cmd string           Command to run to check health</span>
+<span class="bn">      --health-interval duration    Time between running the check (ns|us|ms|s|m|h) (default 0s)</span>
+<span class="bn">      --health-retries int          Consecutive failures needed to report unhealthy</span>
+<span class="bn">      --health-timeout duration     Maximum time to allow one check to run (ns|us|ms|s|m|h) (default 0s)</span>
+<span class="bn">      --help                        Print usage</span>
+  -h, --hostname string             Container host name
+<span class="bn">      --init                        Run an init inside the container that forwards signals and reaps processes</span>
+<span class="bn">      --init-path string            Path to the docker-init binary</span>
+  -i, --interactive                 Keep STDIN open even if not attached
+<span class="bn">      --io-maxbandwidth string      Maximum IO bandwidth limit for the system drive (Windows only)</span>
+<span class="bn">                                    (Windows only). The format is `&lt;number&gt;&lt;unit&gt;`.</span>
+<span class="bn">                                    Unit is optional and can be `b` (bytes per second),</span>
+<span class="bn">                                    `k` (kilobytes per second), `m` (megabytes per second),</span>
+<span class="bn">                                    or `g` (gigabytes per second). If you omit the unit,</span>
+<span class="bn">                                    the system uses bytes per second.</span>
+<span class="bn">                                    --io-maxbandwidth and --io-maxiops are mutually exclusive options.</span>
+<span class="bn">      --io-maxiops uint             Maximum IOps limit for the system drive (Windows only)</span>
+<span class="bn">      --ip string                   IPv4 address (e.g., 172.30.100.104)</span>
+<span class="bn">      --ip6 string                  IPv6 address (e.g., 2001:db8::33)</span>
+<span class="bn">      --ipc string                  IPC namespace to use</span>
+<span class="bn">      --isolation string            Container isolation technology</span>
+<span class="bn">      --kernel-memory string        Kernel memory limit</span>
+  -l, --label value                 Set meta data on a container (default [])
+<span class="bn">      --label-file value            Read in a line delimited file of labels (default [])</span>
+<span class="bn">      --link value                  Add link to another container (default [])</span>
+<span class="bn">      --link-local-ip value         Container IPv4/IPv6 link-local addresses (default [])</span>
+<span class="bn">      --log-driver string           Logging driver for the container</span>
+<span class="bn">      --log-opt value               Log driver options (default [])</span>
+<span class="bn">      --mac-address string          Container MAC address (e.g., 92:d0:c6:0a:29:33)</span>
+  -m, --memory string               Memory limit
+<span class="bn">      --memory-reservation string   Memory soft limit</span>
+<span class="bn">      --memory-swap string          Swap limit equal to memory plus swap: &#39;-1&#39; to enable unlimited swap</span>
+<span class="bn">      --memory-swappiness int       Tune container memory swappiness (0 to 100) (default -1)</span>
+<span class="bn">      --name string                 Assign a name to the container</span>
+<span class="bn">      --network-alias value         Add network-scoped alias for the container (default [])</span>
+<span class="bn">      --network string              Connect a container to a network</span>
+<span class="bn">                                    &#39;bridge&#39;: create a network stack on the default Docker bridge</span>
+<span class="bn">                                    &#39;none&#39;: no networking</span>
+<span class="bn">                                    &#39;container:&lt;name|id&gt;&#39;: reuse another container&#39;s network stack</span>
+<span class="bn">                                    &#39;host&#39;: use the Docker host network stack</span>
+<span class="bn">                                    &#39;&lt;network-name&gt;|&lt;network-id&gt;&#39;: connect to a user-defined network</span>
+<span class="bn">      --no-healthcheck              Disable any container-specified HEALTHCHECK</span>
+<span class="bn">      --oom-kill-disable            Disable OOM Killer</span>
+<span class="bn">      --oom-score-adj int           Tune host&#39;s OOM preferences (-1000 to 1000)</span>
+<span class="bn">      --pid string                  PID namespace to use</span>
+<span class="bn">      --pids-limit int              Tune container pids limit (set -1 for unlimited)</span>
+<span class="bn">      --privileged                  Give extended privileges to this container</span>
+  -p, --publish value               Publish a container&#39;s port(s) to the host (default [])
+  -P, --publish-all                 Publish all exposed ports to random ports
+<span class="bn">      --read-only                   Mount the container&#39;s root filesystem as read only</span>
+<span class="bn">      --restart string              Restart policy to apply when a container exits (default &quot;no&quot;)</span>
+<span class="bn">                                    Possible values are : no, on-failure[:max-retry], always, unless-stopped</span>
+<span class="bn">      --rm                          Automatically remove the container when it exits</span>
+<span class="bn">      --runtime string              Runtime to use for this container</span>
+<span class="bn">      --security-opt value          Security Options (default [])</span>
+<span class="bn">      --shm-size bytes              Size of /dev/shm</span>
+<span class="bn">                                    The format is `&lt;number&gt;&lt;unit&gt;`. `number` must be greater than `0`.</span>
+<span class="bn">                                    Unit is optional and can be `b` (bytes), `k` (kilobytes), `m` (megabytes),</span>
+<span class="bn">                                    or `g` (gigabytes). If you omit the unit, the system uses bytes.</span>
+<span class="bn">      --sig-proxy                   Proxy received signals to the process (default true)</span>
+<span class="bn">      --stop-signal string          Signal to stop a container (default &quot;SIGTERM&quot;)</span>
+<span class="bn">      --stop-timeout=10             Timeout (in seconds) to stop a container</span>
+<span class="bn">      --storage-opt value           Storage driver options for the container (default [])</span>
+<span class="bn">      --sysctl value                Sysctl options (default map[])</span>
+<span class="bn">      --tmpfs value                 Mount a tmpfs directory (default [])</span>
+  -t, --tty                         Allocate a pseudo-TTY
+<span class="bn">      --ulimit value                Ulimit options (default [])</span>
+  -u, --user string                 Username or UID (format: &lt;name|uid&gt;[:&lt;group|gid&gt;])
+<span class="bn">      --userns string               User namespace to use</span>
+<span class="bn">                                    &#39;host&#39;: Use the Docker host user namespace</span>
+<span class="bn">                                    &#39;&#39;: Use the Docker daemon user namespace specified by `--userns-remap` option.</span>
+<span class="bn">      --uts string                  UTS namespace to use</span>
+  -v, --volume value                Bind mount a volume (default []). The format
+<span class="bn">                                    is `[host-src:]container-dest[:&lt;options&gt;]`.</span>
+<span class="bn">                                    The comma-delimited `options` are [rw|ro],</span>
+<span class="bn">                                    [z|Z], [[r]shared|[r]slave|[r]private], and</span>
+<span class="bn">                                    [nocopy]. The &#39;host-src&#39; is an absolute path</span>
+<span class="bn">                                    or a name value.</span>
+<span class="bn">      --volume-driver string        Optional volume driver for the container</span>
+<span class="bn">      --volumes-from value          Mount volumes from the specified container(s) (default [])</span>
+  -w, --workdir string              Working directory inside the container</code></pre></div>
+<h2 id="description">Description</h2>
+<p>The <code>docker run</code> command first <code>creates</code> a writeable container layer over the specified image, and then <code>starts</code> it using the specified command. That is, <code>docker run</code> is equivalent to the API <code>/containers/create</code> then <code>/containers/(id)/start</code>. A stopped container can be restarted with all its previous changes intact using <code>docker start</code>. See <code>docker ps -a</code> to view a list of all containers.</p>
+<p>The <code>docker run</code> command can be used in combination with <code>docker commit</code> to <a href="commit.md"><em>change the command that a container runs</em></a>. There is additional detailed information about <code>docker run</code> in the <a href="../run.md">Docker run reference</a>.</p>
+<p>For information on connecting a container to a network, see the <a href="https://docs.docker.com/engine/userguide/networking/">&quot;<em>Docker network overview</em>&quot;</a>.</p>
+<h2 id="examples">Examples</h2>
+<h3 id="assign-name-and-allocate-pseudo-tty---name--it">Assign name and allocate pseudo-TTY (--name, -it)</h3>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">docker</span> run --name test -it debian
+
+<span class="kw">root@d6c0fe130dba</span>:/# exit 13
+$ <span class="kw">echo</span> <span class="ot">$?</span>
+<span class="kw">13</span>
+$ <span class="kw">docker</span> ps -a <span class="kw">|</span> <span class="kw">grep</span> test
+<span class="kw">d6c0fe130dba</span>        debian:7            <span class="st">&quot;/bin/bash&quot;</span>         26 seconds ago      Exited (13) <span class="kw">17</span> seconds ago                         test</code></pre></div>
+<p>This example runs a container named <code>test</code> using the <code>debian:latest</code> image. The <code>-it</code> instructs Docker to allocate a pseudo-TTY connected to the container's stdin; creating an interactive <code>bash</code> shell in the container. In the example, the <code>bash</code> shell is quit by entering <code>exit 13</code>. This exit code is passed on to the caller of <code>docker run</code>, and is recorded in the <code>test</code> container's metadata.</p>
+<h3 id="capture-container-id---cidfile">Capture container ID (--cidfile)</h3>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">docker</span> run --cidfile /tmp/docker_test.cid ubuntu echo <span class="st">&quot;test&quot;</span></code></pre></div>
+<p>This will create a container and print <code>test</code> to the console. The <code>cidfile</code> flag makes Docker attempt to create a new file and write the container ID to it. If the file exists already, Docker will return an error. Docker will close this file when <code>docker run</code> exits.</p>
+<h3 id="full-container-capabilities---privileged">Full container capabilities (--privileged)</h3>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">docker</span> run -t -i --rm ubuntu bash
+<span class="kw">root@bc338942ef20</span>:/# mount -t tmpfs none /mnt
+<span class="kw">mount</span>: permission denied</code></pre></div>
+<p>This will <em>not</em> work, because by default, most potentially dangerous kernel capabilities are dropped; including <code>cap_sys_admin</code> (which is required to mount filesystems). However, the <code>--privileged</code> flag will allow it to run:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">docker</span> run -t -i --privileged ubuntu bash
+<span class="kw">root@50e3f57e16e6</span>:/# mount -t tmpfs none /mnt
+<span class="kw">root@50e3f57e16e6</span>:/# df -h
+<span class="kw">Filesystem</span>      Size  Used Avail Use% Mounted on
+<span class="kw">none</span>            1.9G     0  1.9G   0% /mnt</code></pre></div>
+<p>The <code>--privileged</code> flag gives <em>all</em> capabilities to the container, and it also lifts all the limitations enforced by the <code>device</code> cgroup controller. In other words, the container can then do almost everything that the host can do. This flag exists to allow special use-cases, like running Docker within Docker.</p>
+<h3 id="set-working-directory--w">Set working directory (-w)</h3>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">docker</span>  run -w /path/to/dir/ -i -t  ubuntu pwd</code></pre></div>
+<p>The <code>-w</code> lets the command being executed inside directory given, here <code>/path/to/dir/</code>. If the path does not exist it is created inside the container.</p>
+<h3 id="set-storage-driver-options-per-container">Set storage driver options per container</h3>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">docker</span> run -it --storage-opt size=120G fedora /bin/bash</code></pre></div>
+<p>This (size) will allow to set the container rootfs size to 120G at creation time. This option is only available for the <code>devicemapper</code>, <code>btrfs</code>, <code>overlay2</code>, <code>windowsfilter</code> and <code>zfs</code> graph drivers. For the <code>devicemapper</code>, <code>btrfs</code>, <code>windowsfilter</code> and <code>zfs</code> graph drivers, user cannot pass a size less than the Default BaseFS Size. For the <code>overlay2</code> storage driver, the size option is only available if the backing fs is <code>xfs</code> and mounted with the <code>pquota</code> mount option. Under these conditions, user can pass any size less then the backing fs size.</p>
+<h3 id="mount-tmpfs---tmpfs">Mount tmpfs (--tmpfs)</h3>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">docker</span> run -d --tmpfs /run:rw,noexec,nosuid,size=65536k my_image</code></pre></div>
+<p>The <code>--tmpfs</code> flag mounts an empty tmpfs into the container with the <code>rw</code>, <code>noexec</code>, <code>nosuid</code>, <code>size=65536k</code> options.</p>
+<h3 id="mount-volume--v---read-only">Mount volume (-v, --read-only)</h3>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">docker</span>  run  -v <span class="kw">`pwd`</span>:<span class="kw">`pwd`</span> -w <span class="kw">`pwd`</span> -i -t  ubuntu pwd</code></pre></div>
+<p>The <code>-v</code> flag mounts the current working directory into the container. The <code>-w</code> lets the command being executed inside the current working directory, by changing into the directory to the value returned by <code>pwd</code>. So this combination executes the command using the container, but inside the current working directory.</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">docker</span> run -v /doesnt/exist:/foo -w /foo -i -t ubuntu bash</code></pre></div>
+<p>When the host directory of a bind-mounted volume doesn't exist, Docker will automatically create this directory on the host for you. In the example above, Docker will create the <code>/doesnt/exist</code> folder before starting your container.</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">docker</span> run --read-only -v /icanwrite busybox touch /icanwrite/here</code></pre></div>
+<p>Volumes can be used in combination with <code>--read-only</code> to control where a container writes files. The <code>--read-only</code> flag mounts the container's root filesystem as read only prohibiting writes to locations other than the specified volumes for the container.</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">docker</span> run -t -i -v /var/run/docker.sock:/var/run/docker.sock -v /path/to/static-docker-binary:/usr/bin/docker busybox sh</code></pre></div>
+<p>By bind-mounting the docker unix socket and statically linked docker binary (refer to <a href="https://docs.docker.com/engine/installation/binaries/#/get-the-linux-binary">get the linux binary</a>), you give the container the full access to create and manipulate the host's Docker daemon.</p>
+<p>On Windows, the paths must be specified using Windows-style semantics.</p>
+<pre class="powershell"><code>PS C:\&gt; docker run -v c:\foo:c:\dest microsoft/nanoserver cmd /s /c type c:\dest\somefile.txt
+Contents of file
+
+PS C:\&gt; docker run -v c:\foo:d: microsoft/nanoserver cmd /s /c type d:\somefile.txt
+Contents of file</code></pre>
+<p>The following examples will fail when using Windows-based containers, as the destination of a volume or bind-mount inside the container must be one of: a non-existing or empty directory; or a drive other than C:. Further, the source of a bind mount must be a local directory, not a file.</p>
+<pre class="powershell"><code>net use z: \\remotemachine\share
+docker run -v z:\foo:c:\dest ...
+docker run -v \\uncpath\to\directory:c:\dest ...
+docker run -v c:\foo\somefile.txt:c:\dest ...
+docker run -v c:\foo:c: ...
+docker run -v c:\foo:c:\existing-directory-with-contents ...</code></pre>
+<p>For in-depth information about volumes, refer to <a href="https://docs.docker.com/engine/tutorials/dockervolumes/">manage data in containers</a></p>
+<h3 id="publish-or-expose-port--p---expose">Publish or expose port (-p, --expose)</h3>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">docker</span> run -p 127.0.0.1:80:8080 ubuntu bash</code></pre></div>
+<p>This binds port <code>8080</code> of the container to port <code>80</code> on <code>127.0.0.1</code> of the host machine. The <a href="https://docs.docker.com/engine/userguide/networking/default_network/dockerlinks/">Docker User Guide</a> explains in detail how to manipulate ports in Docker.</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">docker</span> run --expose 80 ubuntu bash</code></pre></div>
+<p>This exposes port <code>80</code> of the container without publishing the port to the host system's interfaces.</p>
+<h3 id="set-environment-variables--e---env---env-file">Set environment variables (-e, --env, --env-file)</h3>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">docker</span> run -e MYVAR1 --env MYVAR2=foo --env-file ./env.list ubuntu bash</code></pre></div>
+<p>This sets simple (non-array) environmental variables in the container. For illustration all three flags are shown here. Where <code>-e</code>, <code>--env</code> take an environment variable and value, or if no <code>=</code> is provided, then that variable's current value, set via <code>export</code>, is passed through (i.e. <code>$MYVAR1</code> from the host is set to <code>$MYVAR1</code> in the container). When no <code>=</code> is provided and that variable is not defined in the client's environment then that variable will be removed from the container's list of environment variables. All three flags, <code>-e</code>, <code>--env</code> and <code>--env-file</code> can be repeated.</p>
+<p>Regardless of the order of these three flags, the <code>--env-file</code> are processed first, and then <code>-e</code>, <code>--env</code> flags. This way, the <code>-e</code> or <code>--env</code> will override variables as needed.</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cat</span> ./env.list
+<span class="ot">TEST_FOO=</span>BAR
+$ <span class="kw">docker</span> run --env TEST_FOO=<span class="st">&quot;This is a test&quot;</span> --env-file ./env.list busybox env <span class="kw">|</span> <span class="kw">grep</span> TEST_FOO
+<span class="ot">TEST_FOO=</span>This <span class="kw">is</span> a test</code></pre></div>
+<p>The <code>--env-file</code> flag takes a filename as an argument and expects each line to be in the <code>VAR=VAL</code> format, mimicking the argument passed to <code>--env</code>. Comment lines need only be prefixed with <code>#</code></p>
+<p>An example of a file passed with <code>--env-file</code></p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cat</span> ./env.list
+<span class="ot">TEST_FOO=</span>BAR
+
+<span class="co"># this is a comment</span>
+<span class="ot">TEST_APP_DEST_HOST=</span>10.10.0.127
+<span class="ot">TEST_APP_DEST_PORT=</span>8888
+<span class="ot">_TEST_BAR=</span>FOO
+<span class="ot">TEST_APP_42=</span>magic
+<span class="ot">helloWorld=</span>true
+<span class="kw">123qwe</span>=bar
+<span class="kw">org.spring.config</span>=something
+
+<span class="co"># pass through this variable from the caller</span>
+<span class="kw">TEST_PASSTHROUGH</span>
+$ <span class="ot">TEST_PASSTHROUGH=</span>howdy <span class="kw">docker</span> run --env-file ./env.list busybox env
+<span class="ot">PATH=</span>/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+<span class="ot">HOSTNAME=</span>5198e0745561
+<span class="ot">TEST_FOO=</span>BAR
+<span class="ot">TEST_APP_DEST_HOST=</span>10.10.0.127
+<span class="ot">TEST_APP_DEST_PORT=</span>8888
+<span class="ot">_TEST_BAR=</span>FOO
+<span class="ot">TEST_APP_42=</span>magic
+<span class="ot">helloWorld=</span>true
+<span class="ot">TEST_PASSTHROUGH=</span>howdy
+<span class="ot">HOME=</span>/root
+<span class="kw">123qwe</span>=bar
+<span class="kw">org.spring.config</span>=something
+
+$ <span class="kw">docker</span> run --env-file ./env.list busybox env
+<span class="ot">PATH=</span>/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+<span class="ot">HOSTNAME=</span>5198e0745561
+<span class="ot">TEST_FOO=</span>BAR
+<span class="ot">TEST_APP_DEST_HOST=</span>10.10.0.127
+<span class="ot">TEST_APP_DEST_PORT=</span>8888
+<span class="ot">_TEST_BAR=</span>FOO
+<span class="ot">TEST_APP_42=</span>magic
+<span class="ot">helloWorld=</span>true
+<span class="ot">TEST_PASSTHROUGH=</span>
+<span class="ot">HOME=</span>/root
+<span class="kw">123qwe</span>=bar
+<span class="kw">org.spring.config</span>=something</code></pre></div>
+<h3 id="set-metadata-on-container--l---label---label-file">Set metadata on container (-l, --label, --label-file)</h3>
+<p>A label is a <code>key=value</code> pair that applies metadata to a container. To label a container with two labels:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">docker</span> run -l my-label --label com.example.foo=bar ubuntu bash</code></pre></div>
+<p>The <code>my-label</code> key doesn't specify a value so the label defaults to an empty string(<code>&quot;&quot;</code>). To add multiple labels, repeat the label flag (<code>-l</code> or <code>--label</code>).</p>
+<p>The <code>key=value</code> must be unique to avoid overwriting the label value. If you specify labels with identical keys but different values, each subsequent value overwrites the previous. Docker uses the last <code>key=value</code> you supply.</p>
+<p>Use the <code>--label-file</code> flag to load multiple labels from a file. Delimit each label in the file with an EOL mark. The example below loads labels from a labels file in the current directory:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">docker</span> run --label-file ./labels ubuntu bash</code></pre></div>
+<p>The label-file format is similar to the format for loading environment variables. (Unlike environment variables, labels are not visible to processes running inside a container.) The following example illustrates a label-file format:</p>
+<pre class="none"><code>com.example.label1=&quot;a label&quot;
+
+# this is a comment
+com.example.label2=another\ label
+com.example.label3</code></pre>
+<p>You can load multiple label-files by supplying multiple <code>--label-file</code> flags.</p>
+<p>For additional information on working with labels, see <a href="https://docs.docker.com/engine/userguide/labels-custom-metadata/"><em>Labels - custom metadata in Docker</em></a> in the Docker User Guide.</p>
+<h3 id="connect-a-container-to-a-network---network">Connect a container to a network (--network)</h3>
+<p>When you start a container use the <code>--network</code> flag to connect it to a network. This adds the <code>busybox</code> container to the <code>my-net</code> network.</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">docker</span> run -itd --network=my-net busybox</code></pre></div>
+<p>You can also choose the IP addresses for the container with <code>--ip</code> and <code>--ip6</code> flags when you start the container on a user-defined network.</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">docker</span> run -itd --network=my-net --ip=10.10.9.75 busybox</code></pre></div>
+<p>If you want to add a running container to a network use the <code>docker network connect</code> subcommand.</p>
+<p>You can connect multiple containers to the same network. Once connected, the containers can communicate easily need only another container's IP address or name. For <code>overlay</code> networks or custom plugins that support multi-host connectivity, containers connected to the same multi-host network but launched from different Engines can also communicate in this way.</p>
+<blockquote>
+<p><strong>Note</strong>: Service discovery is unavailable on the default bridge network. Containers can communicate via their IP addresses by default. To communicate by name, they must be linked.</p>
+</blockquote>
+<p>You can disconnect a container from a network using the <code>docker network disconnect</code> command.</p>
+<h3 id="mount-volumes-from-container---volumes-from">Mount volumes from container (--volumes-from)</h3>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">docker</span> run --volumes-from 777f7dc92da7 --volumes-from ba8c0c54f0f2:ro -i -t ubuntu pwd</code></pre></div>
+<p>The <code>--volumes-from</code> flag mounts all the defined volumes from the referenced containers. Containers can be specified by repetitions of the <code>--volumes-from</code> argument. The container ID may be optionally suffixed with <code>:ro</code> or <code>:rw</code> to mount the volumes in read-only or read-write mode, respectively. By default, the volumes are mounted in the same mode (read write or read only) as the reference container.</p>
+<p>Labeling systems like SELinux require that proper labels are placed on volume content mounted into a container. Without a label, the security system might prevent the processes running inside the container from using the content. By default, Docker does not change the labels set by the OS.</p>
+<p>To change the label in the container context, you can add either of two suffixes <code>:z</code> or <code>:Z</code> to the volume mount. These suffixes tell Docker to relabel file objects on the shared volumes. The <code>z</code> option tells Docker that two containers share the volume content. As a result, Docker labels the content with a shared content label. Shared volume labels allow all containers to read/write content. The <code>Z</code> option tells Docker to label the content with a private unshared label. Only the current container can use a private volume.</p>
+<h3 id="attach-to-stdinstdoutstderr--a">Attach to STDIN/STDOUT/STDERR (-a)</h3>
+<p>The <code>-a</code> flag tells <code>docker run</code> to bind to the container's <code>STDIN</code>, <code>STDOUT</code> or <code>STDERR</code>. This makes it possible to manipulate the output and input as needed.</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">echo</span> <span class="st">&quot;test&quot;</span> <span class="kw">|</span> <span class="kw">docker</span> run -i -a stdin ubuntu cat -</code></pre></div>
+<p>This pipes data into a container and prints the container's ID by attaching only to the container's <code>STDIN</code>.</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">docker</span> run -a stderr ubuntu echo test</code></pre></div>
+<p>This isn't going to print anything unless there's an error because we've only attached to the <code>STDERR</code> of the container. The container's logs still store what's been written to <code>STDERR</code> and <code>STDOUT</code>.</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cat</span> somefile <span class="kw">|</span> <span class="kw">docker</span> run -i -a stdin mybuilder dobuild</code></pre></div>
+<p>This is how piping a file into a container could be done for a build. The container's ID will be printed after the build is done and the build logs could be retrieved using <code>docker logs</code>. This is useful if you need to pipe a file or something else into a container and retrieve the container's ID once the container has finished running.</p>
+<h3 id="add-host-device-to-container---device">Add host device to container (--device)</h3>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">docker</span> run --device=/dev/sdc:/dev/xvdc \
+             --device=/dev/sdd --device=/dev/zero:/dev/nulo \
+             -i -t \
+             ubuntu ls -l /dev/<span class="dt">{xvdc,sdd,nulo}</span>
+
+<span class="kw">brw-rw----</span> 1 root disk 8, 2 Feb  9 16:05 /dev/xvdc
+<span class="kw">brw-rw----</span> 1 root disk 8, 3 Feb  9 16:05 /dev/sdd
+<span class="kw">crw-rw-rw-</span> 1 root root 1, 5 Feb  9 16:05 /dev/nulo</code></pre></div>
+<p>It is often necessary to directly expose devices to a container. The <code>--device</code> option enables that. For example, a specific block storage device or loop device or audio device can be added to an otherwise unprivileged container (without the <code>--privileged</code> flag) and have the application directly access it.</p>
+<p>By default, the container will be able to <code>read</code>, <code>write</code> and <code>mknod</code> these devices. This can be overridden using a third <code>:rwm</code> set of options to each <code>--device</code> flag:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">docker</span> run --device=/dev/sda:/dev/xvdc --rm -it ubuntu fdisk  /dev/xvdc
+
+<span class="kw">Command</span> (m for help)<span class="kw">:</span> q
+$ <span class="kw">docker</span> run --device=/dev/sda:/dev/xvdc:r --rm -it ubuntu fdisk  /dev/xvdc
+<span class="kw">You</span> will not be able to write the partition table.
+
+<span class="kw">Command</span> (m for help)<span class="kw">:</span> q
+
+$ <span class="kw">docker</span> run --device=/dev/sda:/dev/xvdc:rw --rm -it ubuntu fdisk  /dev/xvdc
+
+<span class="kw">Command</span> (m for help)<span class="kw">:</span> q
+
+$ <span class="kw">docker</span> run --device=/dev/sda:/dev/xvdc:m --rm -it ubuntu fdisk  /dev/xvdc
+<span class="kw">fdisk</span>: unable to open /dev/xvdc: Operation not permitted</code></pre></div>
+<blockquote>
+<p><strong>Note</strong>: <code>--device</code> cannot be safely used with ephemeral devices. Block devices that may be removed should not be added to untrusted containers with <code>--device</code>.</p>
+</blockquote>
+<h3 id="restart-policies---restart">Restart policies (--restart)</h3>
+<p>Use Docker's <code>--restart</code> to specify a container's <em>restart policy</em>. A restart policy controls whether the Docker daemon restarts a container after exit. Docker supports the following restart policies:</p>
+<table style="width:86%;">
+<colgroup>
+<col width="27%" />
+<col width="58%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Policy</th>
+<th align="left">Result</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>no</code></td>
+<td align="left">Do not automatically restart the container when it exits. This is the default.</td>
+</tr>
+<tr class="even">
+<td align="left"><code>failure</code></td>
+<td align="left">Restart only if the container exits with a non-zero exit status. Optionally, limit the number of restart retries the Docker daemon attempts.</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>always</code></td>
+<td align="left">Always restart the container regardless of the exit status. When you specify always, the Docker daemon will try to restart the container indefinitely. The container will also always start on daemon startup, regardless of the current state of the container.</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">docker</span> run --restart=always redis</code></pre></div>
+<p>This will run the <code>redis</code> container with a restart policy of <strong>always</strong> so that if the container exits, Docker will restart it.</p>
+<p>More detailed information on restart policies can be found in the <a href="../run.md#restart-policies-restart">Restart Policies (--restart)</a> section of the Docker run reference page.</p>
+<h3 id="add-entries-to-container-hosts-file---add-host">Add entries to container hosts file (--add-host)</h3>
+<p>You can add other hosts into a container's <code>/etc/hosts</code> file by using one or more <code>--add-host</code> flags. This example adds a static address for a host named <code>docker</code>:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">docker</span> run --add-host=docker:10.180.0.1 --rm -it debian
+
+<span class="kw">root@f38c87f2a42d</span>:/# ping docker
+<span class="kw">PING</span> docker (10.180.0.1)<span class="kw">:</span> 48 data bytes
+<span class="kw">56</span> bytes from 10.180.0.1: icmp_seq=0 ttl=254 time=7.600 ms
+<span class="kw">56</span> bytes from 10.180.0.1: icmp_seq=1 ttl=254 time=30.705 ms
+^<span class="kw">C---</span> docker ping statistics ---
+<span class="kw">2</span> packets transmitted, 2 packets received, 0% packet loss
+<span class="kw">round-trip</span> min/avg/max/stddev = 7.600/19.152/30.705/11.553 ms</code></pre></div>
+<p>Sometimes you need to connect to the Docker host from within your container. To enable this, pass the Docker host's IP address to the container using the <code>--add-host</code> flag. To find the host's address, use the <code>ip addr show</code> command.</p>
+<p>The flags you pass to <code>ip addr show</code> depend on whether you are using IPv4 or IPv6 networking in your containers. Use the following flags for IPv4 address retrieval for a network device named <code>eth0</code>:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="ot">HOSTIP=</span><span class="kw">`ip</span> -4 addr show scope global dev eth0 <span class="kw">|</span> <span class="kw">grep</span> inet <span class="kw">|</span> <span class="kw">awk</span> <span class="st">&#39;{print \$2}&#39;</span> <span class="kw">|</span> <span class="kw">cut</span> -d / -f 1<span class="kw">`</span>
+$ <span class="kw">docker</span> run  --add-host=docker:<span class="ot">${HOSTIP}</span> --rm -it debian</code></pre></div>
+<p>For IPv6 use the <code>-6</code> flag instead of the <code>-4</code> flag. For other network devices, replace <code>eth0</code> with the correct device name (for example <code>docker0</code> for the bridge device).</p>
+<h3 id="set-ulimits-in-container---ulimit">Set ulimits in container (--ulimit)</h3>
+<p>Since setting <code>ulimit</code> settings in a container requires extra privileges not available in the default container, you can set these using the <code>--ulimit</code> flag. <code>--ulimit</code> is specified with a soft and hard limit as such: <code>&lt;type&gt;=&lt;soft limit&gt;[:&lt;hard limit&gt;]</code>, for example:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">docker</span> run --ulimit nofile=1024:1024 --rm debian sh -c <span class="st">&quot;ulimit -n&quot;</span>
+<span class="kw">1024</span></code></pre></div>
+<blockquote>
+<p><strong>Note</strong>: If you do not provide a <code>hard limit</code>, the <code>soft limit</code> will be used for both values. If no <code>ulimits</code> are set, they will be inherited from the default <code>ulimits</code> set on the daemon. <code>as</code> option is disabled now. In other words, the following script is not supported:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">docker</span> run -it --ulimit as=1024 fedora /bin/bash<span class="kw">`</span></code></pre></div>
+</blockquote>
+<p>The values are sent to the appropriate <code>syscall</code> as they are set. Docker doesn't perform any byte conversion. Take this into account when setting the values.</p>
+<h4 id="for-nproc-usage">For <code>nproc</code> usage</h4>
+<p>Be careful setting <code>nproc</code> with the <code>ulimit</code> flag as <code>nproc</code> is designed by Linux to set the maximum number of processes available to a user, not to a container. For example, start four containers with <code>daemon</code> user:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">docker</span> run -d -u daemon --ulimit nproc=3 busybox top
+
+$ <span class="kw">docker</span> run -d -u daemon --ulimit nproc=3 busybox top
+
+$ <span class="kw">docker</span> run -d -u daemon --ulimit nproc=3 busybox top
+
+$ <span class="kw">docker</span> run -d -u daemon --ulimit nproc=3 busybox top</code></pre></div>
+<p>The 4th container fails and reports &quot;[8] System error: resource temporarily unavailable&quot; error. This fails because the caller set <code>nproc=3</code> resulting in the first three containers using up the three processes quota set for the <code>daemon</code> user.</p>
+<h3 id="stop-container-with-signal---stop-signal">Stop container with signal (--stop-signal)</h3>
+<p>The <code>--stop-signal</code> flag sets the system call signal that will be sent to the container to exit. This signal can be a valid unsigned number that matches a position in the kernel's syscall table, for instance 9, or a signal name in the format SIGNAME, for instance SIGKILL.</p>
+<h3 id="optional-security-options---security-opt">Optional security options (--security-opt)</h3>
+<p>On Windows, this flag can be used to specify the <code>credentialspec</code> option. The <code>credentialspec</code> must be in the format <code>file://spec.txt</code> or <code>registry://keyname</code>.</p>
+<h3 id="stop-container-with-timeout---stop-timeout">Stop container with timeout (--stop-timeout)</h3>
+<p>The <code>--stop-timeout</code> flag sets the timeout (in seconds) that a pre-defined (see <code>--stop-signal</code>) system call signal that will be sent to the container to exit. After timeout elapses the container will be killed with SIGKILL.</p>
+<h3 id="specify-isolation-technology-for-container---isolation">Specify isolation technology for container (--isolation)</h3>
+<p>This option is useful in situations where you are running Docker containers on Windows. The <code>--isolation &lt;value&gt;</code> option sets a container's isolation technology. On Linux, the only supported is the <code>default</code> option which uses Linux namespaces. These two commands are equivalent on Linux:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">docker</span> run -d busybox top
+$ <span class="kw">docker</span> run -d --isolation default busybox top</code></pre></div>
+<p>On Windows, <code>--isolation</code> can take one of these values:</p>
+<table>
+<colgroup>
+<col width="11%" />
+<col width="88%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Value</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>default</code></td>
+<td align="left">Use the value specified by the Docker daemon's <code>--exec-opt</code> or system default (see below).</td>
+</tr>
+<tr class="even">
+<td align="left"><code>process</code></td>
+<td align="left">Shared-kernel namespace isolation (not supported on Windows client operating systems).</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>hyperv</code></td>
+<td align="left">Hyper-V hypervisor partition-based isolation.</td>
+</tr>
+</tbody>
+</table>
+<p>The default isolation on Windows server operating systems is <code>process</code>. The default (and only supported) isolation on Windows client operating systems is <code>hyperv</code>. An attempt to start a container on a client operating system with <code>--isolation process</code> will fail.</p>
+<p>On Windows server, assuming the default configuration, these commands are equivalent and result in <code>process</code> isolation:</p>
+<pre class="powershell"><code>PS C:\&gt; docker run -d microsoft/nanoserver powershell echo process
+PS C:\&gt; docker run -d --isolation default microsoft/nanoserver powershell echo process
+PS C:\&gt; docker run -d --isolation process microsoft/nanoserver powershell echo process</code></pre>
+<p>If you have set the <code>--exec-opt isolation=hyperv</code> option on the Docker <code>daemon</code>, or are running against a Windows client-based daemon, these commands are equivalent and result in <code>hyperv</code> isolation:</p>
+<pre class="powershell"><code>PS C:\&gt; docker run -d microsoft/nanoserver powershell echo hyperv
+PS C:\&gt; docker run -d --isolation default microsoft/nanoserver powershell echo hyperv
+PS C:\&gt; docker run -d --isolation hyperv microsoft/nanoserver powershell echo hyperv</code></pre>
+<h3 id="configure-namespaced-kernel-parameters-sysctls-at-runtime">Configure namespaced kernel parameters (sysctls) at runtime</h3>
+<p>The <code>--sysctl</code> sets namespaced kernel parameters (sysctls) in the container. For example, to turn on IP forwarding in the containers network namespace, run this command:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">docker</span> run --sysctl net.ipv4.ip_forward=1 someimage</code></pre></div>
+<blockquote>
+<p><strong>Note</strong>: Not all sysctls are namespaced. Docker does not support changing sysctls inside of a container that also modify the host system. As the kernel evolves we expect to see more sysctls become namespaced.</p>
+</blockquote>
+<h4 id="currently-supported-sysctls">Currently supported sysctls</h4>
+<ul>
+<li><code>IPC Namespace</code>:</li>
+</ul>
+<p><code>none   kernel.msgmax, kernel.msgmnb, kernel.msgmni, kernel.sem, kernel.shmall, kernel.shmmax, kernel.shmmni, kernel.shm_rmid_forced   Sysctls beginning with fs.mqueue.*</code></p>
+<p>If you use the <code>--ipc=host</code> option these sysctls will not be allowed.</p>
+<ul>
+<li><code>Network Namespace</code>:</li>
+</ul>
+<p>Sysctls beginning with net.*</p>
+<p>If you use the <code>--network=host</code> option using these sysctls will not be allowed.</p>
+</body>
+</html>
