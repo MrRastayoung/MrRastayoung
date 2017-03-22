@@ -17,14 +17,14 @@
 </blockquote>
 <h2 id="como-crear-network-definida">Como crear network definida</h2>
 <h3 id="inspeccionar-networks.">inspeccionar networks.</h3>
-<p>·<code>docker network</code> <strong><em><code>ls</code></em></strong></p>
-<p>·<code>docker network inspect</code> <strong><em><code>&lt;id/namenetwork&gt;</code></em></strong></p>
+<p># <code>docker network</code> <strong><em><code>ls</code></em></strong></p>
+<p># <code>docker network inspect</code> <strong><em><code>&lt;id/namenetwork&gt;</code></em></strong></p>
 <h3 id="crear-nueva-network.">Crear nueva network.</h3>
-<p>·<code>docker network create</code> <strong><em><code>&lt;newnetwork&gt;</code></em></strong></p>
+<p># <code>docker network create</code> <strong><em><code>&lt;newnetwork&gt;</code></em></strong></p>
 <p><em>pero nosotros queremos una network personalizada</em></p>
 <h2 id="crear-network-personalizada.">Crear network personalizada.</h2>
 <blockquote>
-<p>·<code>docker network create</code></p>
+<p># <code>docker network create</code></p>
 </blockquote>
 <blockquote>
 <p><code>--driver=</code> <strong><code>bridge</code></strong></p>
@@ -43,10 +43,23 @@
 </blockquote>
 <h2 id="arrancar-un-nuevo-docker-con-la-nueva-network.">Arrancar un nuevo Docker con la nueva Network.</h2>
 <blockquote>
-<p>1.·<code>docker run --net=</code> <strong><em><code>&lt;name_network&gt;</code></em></strong> <code>--ip=</code> <strong><em><code>172.22.0.12</code></em></strong> <code>--name=</code> <strong><em><code>base</code></em></strong> <code>-itd</code> <strong><em><code>altairisx/base:fedora</code></em></strong> <strong><em><code>/bin/bash</code></em></strong></p>
+<p>1.# <code>docker run --net=</code> <strong><em><code>&lt;name_network&gt;</code></em></strong> <code>--ip=</code> <strong><em><code>172.22.0.12</code></em></strong> <code>--name=</code> <strong><em><code>base</code></em></strong> <code>-itd</code> <strong><em><code>altairisx/base:fedora</code></em></strong> <strong><em><code>/bin/bash</code></em></strong></p>
 </blockquote>
 <blockquote>
-<p>2.·<code>docker run -t -i --net=</code> <strong><em><code>&lt;name_network&gt;</code></em></strong> <strong><em><code>altairisx/base:fedora</code></em></strong> <strong><em><code>/bin/bash</code></em></strong></p>
+<p>o</p>
+</blockquote>
+<blockquote>
+<p>2.# <code>docker run -t -i --net=</code> <strong><em><code>&lt;name_network&gt;</code></em></strong> <strong><em><code>altairisx/base:fedora</code></em></strong> <strong><em><code>/bin/bash</code></em></strong></p>
+</blockquote>
+<h2 id="comprobar-nueva-red-dentro-del-docker.">Comprobar nueva red dentro del docker.</h2>
+<blockquote>
+<p>Desde dentro del docker</p>
+</blockquote>
+<blockquote>
+<p># <code>ip a s</code></p>
+</blockquote>
+<blockquote>
+<p>* tenemos que tener los paquetes siguientes <strong><em>iproute,iputils</em></strong>, si utilizamos el repositorio indicado en el ejemplo.</p>
 </blockquote>
 </body>
 </html>
