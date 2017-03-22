@@ -27,6 +27,6 @@
 </ul>
 <p><em>pero nosotros queremos una network personalizada</em></p>
 <h2 id="crear-network-personalizada">Crear network personalizada</h2>
-<p>include <docker network create --driver=bridge --subnet=172.22.0.0/16 -o com.docker.network.bridge.enable_icc=true -o com.docker.network.bridge.enable_ip_masquerade=true -o com.docker.network.bridge.host_binding_ipv4=0.0.0.0 foo.local></p>
+<p><code>docker network create --driver=bridge --subnet=172.22.0.0/16 -o com.docker.network.bridge.enable_icc=true -o com.docker.network.bridge.enable_ip_masquerade=true -o com.docker.network.bridge.host_binding_ipv4=0.0.0.0 foo.local</code></p>
 </body>
 </html>
